@@ -225,6 +225,14 @@ double** AlgorithmSolver::checkMatrixRank(double** matrix, int size, int** x, in
 {
     int matrixSize = 0;
 
+    for (int i = 0; i < size; i++) {
+        printf("\n");
+        for (int j = 0; j < size; j++)
+            printf("%6.2f   ", matrix[i][j]);
+
+    }
+    printf("\n");
+
     double** twoOnTwoMatrix = new double*[2];
     for (unsigned int i = 0; i < 2; i++)
     {
@@ -278,7 +286,9 @@ Node* AlgorithmSolver::divaricate(Node* node)
         cols[i] = new int[2];
     }
     double** m = checkMatrixRank(node->costMatrix, size, rows, cols);
+
     if (m != NULL) {
+
 
         node->mark = substractMinFromAllRows(m, 2, node->mark);
         node->mark = substractMinFromAllCols(m, 2, node->mark);
@@ -290,7 +300,14 @@ Node* AlgorithmSolver::divaricate(Node* node)
                                                                   (rows[i][j], cols[i][j]), 0));
 
 
-        std::cout << m[0][0] << " " << m[0][1] << "\n" << m[1][0] << " " << m[1][1] << "\n";
+            for (int i = 0; i < 2; i++) {
+                printf("\n");
+                for (int j = 0; j < 2; j++)
+                    printf("%6.2f   ", m[i][j]);
+
+            }
+            printf("\n");
+
         std::cout << "mark is " << node->mark << "\n";
         for (int i = 0; i < node->path.size(); i++)
             std::cout << node->path.at(i).first.first << "; "
@@ -333,12 +350,12 @@ Node* AlgorithmSolver::divaricate(Node* node)
     node->right->mark = substractMinFromAllCols(node->right->costMatrix, size, node->right->mark);
 
     chains = findChainWithMaxCoeff(node->right->costMatrix, size);
-    //node->left->path.append(chains.at(0));
+    //node->right->path.append(chains.at(0));
 
     node->right->costMatrix[chains.at(0).first.first][chains.at(0).first.second]
             = std::numeric_limits<double>::infinity();
 
-    node->right->mark += chains.at(0).second;
+  //  node->right->mark += chains.at(0).second;
 
     std::cout << node->right->mark << " | " << chains.at(0).first.first << " ; " << chains.at(0).first.second << "\n";
 
