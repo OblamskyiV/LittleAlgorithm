@@ -29,7 +29,7 @@ double AlgorithmSolver::findMinimalRowElement(int row)
 {
     double min = std::numeric_limits<double>::infinity();
     for (int j = 0; j < size; j++) {
-        if (costMatrix[row][j] < min)
+        if (costMatrix[row][j] >= 0 && costMatrix[row][j] < min)
             min = costMatrix[row][j];
     }
     return min;
@@ -39,7 +39,7 @@ double AlgorithmSolver::findMinimalColElement(int col)
 {
     double min = std::numeric_limits<double>::infinity();
     for (int i = 0; i < size; i++) {
-        if (costMatrix[i][col] < min)
+        if (costMatrix[i][col] >= 0 && costMatrix[i][col] < min)
             min = costMatrix[i][col];
     }
     return min;
@@ -51,10 +51,11 @@ void AlgorithmSolver::substractMinFromAllRows()
     {
         double min = findMinimalRowElement(i);
 
-        for (int j = 0; j < size; j++)
-        {
-            costMatrix[i][j] -= min;
-        }
+        if (min >= 0)
+            for (int j = 0; j < size; j++)
+            {
+                costMatrix[i][j] -= min;
+            }
     }
 }
 
@@ -64,9 +65,10 @@ void AlgorithmSolver::substractMinFromAllCols()
     {
         double min = findMinimalColElement(j);
 
-        for (int i = 0; i < size; i++)
-        {
-            costMatrix[i][j] -= min;
-        }
+        if (min >= 0)
+            for (int i = 0; i < size; i++)
+            {
+                costMatrix[i][j] -= min;
+            }
     }
 }
