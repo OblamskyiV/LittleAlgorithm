@@ -9,11 +9,17 @@ AlgorithmSolver::AlgorithmSolver(double **matrix, const int size):
 
 void AlgorithmSolver::solve()
 {
-    // Step 1
-    substractMinFromAllRows();
-    substractMinFromAllCols();
+    do {
+        substractMinFromAllRows();
+        substractMinFromAllCols();
 
-    //TODO: other steps
+        //TODO: other steps
+
+        exit(0);
+
+    } while (findRank() > 2);
+
+    //TODO: last step
 }
 
 void AlgorithmSolver::printCostMatrix()
@@ -95,4 +101,15 @@ void AlgorithmSolver::removeRowAndCol(int row, int col)
     }
 
     costMatrix[row][col] = std::numeric_limits<double>::infinity();
+}
+
+int AlgorithmSolver::findRank()
+{
+    int rank = size;
+
+    for (int i = 0; i < size; i++)
+        if (costMatrix[0][i] == -1)
+            rank--;
+
+    return rank;
 }

@@ -27,6 +27,8 @@ private:
     void substractMinFromAllCols();
 
     void removeRowAndCol(int row, int col);
+
+    int findRank();
 public:
 
     void solve();
