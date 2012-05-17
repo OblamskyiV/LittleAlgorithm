@@ -51,12 +51,38 @@ double AlgorithmSolver::findMinimalRowElement(int row)
     return min;
 }
 
+double AlgorithmSolver::findMinimalRowElement(double** matrix, int matrixSize,int row,
+                                              QPair<int, int> excludedChain)
+{
+    double min = std::numeric_limits<double>::infinity();
+    for (int j = 0; j < matrixSize; j++) {
+        if (matrix[row][j] >= 0
+                && matrix[row][j] < min
+                && j != excludedChain.second)
+            min = matrix[row][j];
+    }
+    return min;
+}
+
 double AlgorithmSolver::findMinimalColElement(int col)
 {
     double min = std::numeric_limits<double>::infinity();
     for (int i = 0; i < size; i++) {
         if (costMatrix[i][col] >= 0 && costMatrix[i][col] < min)
             min = costMatrix[i][col];
+    }
+    return min;
+}
+
+double AlgorithmSolver::findMinimalColElement(double** matrix, int matrixSize, int col,
+                                              QPair<int, int> excludedChain)
+{
+    double min = std::numeric_limits<double>::infinity();
+    for (int i = 0; i < matrixSize; i++) {
+        if (matrix[i][col] >= 0
+                && matrix[i][col] < min
+                && i != excludedChain.first)
+            min = matrix[i][col];
     }
     return min;
 }
@@ -89,6 +115,53 @@ void AlgorithmSolver::substractMinFromAllCols()
                 costMatrix[i][j] -= min;
             }
     }
+}
+
+double AlgorithmSolver::findMaxMatrixElement(double** matrix, int size)
+{
+    double maxValue = -1;
+
+    for (int i = 0; i < size; i++)
+        for (int j = 0; j < size; j++)
+            if (matrix[i][j] > maxValue)
+                maxValue = matrix[i][j];
+    return maxValue;
+
+}
+
+QVector<QPair<int, int> > AlgorithmSolver::findChainWithMaxCoef()
+{
+    // create temporary matrix
+    double** tmpCostMatrix = new double*[size];
+    for (unsigned int i = 0; i < size; ++i)
+    {
+        tmpCostMatrix[i] = new double[size];
+    }
+
+    for (int i = 0; i < size; i++)
+        for (int j = 0; j < size; j++)
+            if (costMatrix[i][j] == 0) {
+                tmpCostMatrix[i][j] = costMatrix[i][j];
+
+                tmpCostMatrix[i][j] = findMinimalRowElement(costMatrix, size, i,
+                                                            QPair<int, int>(i, j))
+                        + findMinimalColElement(costMatrix, size, j,
+                                                QPair<int, int>(i, j));
+            }
+            else
+                tmpCostMatrix[i][j] = -1;
+
+    QVector<QPair<int, int> > vector;
+    double maxCoeff = findMaxMatrixElement(tmpCostMatrix, size);
+
+    for (int i = 0; i < size; i++)
+        for (int j = 0; j < size; j++)
+            if (tmpCostMatrix[i][j] == maxCoeff)
+                vector.append(QPair<int, int>(i, j));
+
+    //FIXME: memory leak
+
+    return vector;
 }
 
 void AlgorithmSolver::removeRowAndCol(int row, int col)
