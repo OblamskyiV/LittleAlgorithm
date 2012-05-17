@@ -19,9 +19,12 @@ private:
 
     double findMinimalRowElement(int row);
     double findMinimalColElement(int col);
+
+    void substractMinFromAllRows();
+    void substractMinFromAllCols();
 public:
 
-
+    void solve();
 };
 
 #endif // ALGORITHMSOLVER_H
