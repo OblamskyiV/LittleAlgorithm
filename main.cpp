@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     const unsigned int size = 6;
 
     double** costMatrix = new double*[size];
-    for (unsigned int i = 0; i < size; ++i)
+    for (unsigned int i = 0; i < size; i++)
     {
         costMatrix[i] = new double[size];
     }
@@ -57,11 +57,11 @@ int main(int argc, char *argv[])
 
     AlgorithmSolver *solver = new AlgorithmSolver(costMatrix, size);
 
-    solver->print();
+    solver->printCostMatrix();
     std::cout << "==========================================================\n";
 
     solver->solve();
-    solver->print();
+    solver->printCostMatrix();
 
     return 0;
 }

@@ -4,6 +4,7 @@ AlgorithmSolver::AlgorithmSolver(double **matrix, const int size):
     size(size)
 {   
     costMatrix = matrix;
+    contour = QVector<QPair<int, int> >();
 }
 
 void AlgorithmSolver::solve()
@@ -15,7 +16,7 @@ void AlgorithmSolver::solve()
     //TODO: other steps
 }
 
-void AlgorithmSolver::print()
+void AlgorithmSolver::printCostMatrix()
 {
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
@@ -23,6 +24,14 @@ void AlgorithmSolver::print()
         }
         printf("\n");
     }
+}
+
+void AlgorithmSolver::printContour()
+{
+    for (int i = 0; i < contour.size(); i++) {
+        std::cout << "(" << contour.at(i).first << ", " << contour.at(i).second << "); ";
+    }
+    std::cout << std::endl;
 }
 
 double AlgorithmSolver::findMinimalRowElement(int row)
@@ -71,4 +80,19 @@ void AlgorithmSolver::substractMinFromAllCols()
                 costMatrix[i][j] -= min;
             }
     }
+}
+
+void AlgorithmSolver::removeRowAndCol(int row, int col)
+{
+    for (int i = 0; i < size; i++)
+    {
+        costMatrix[i][col] = -1;
+    }
+
+    for (int j = 0; j < size; j++)
+    {
+        costMatrix[row][j] = -1;
+    }
+
+    costMatrix[row][col] = std::numeric_limits<double>::infinity();
 }
