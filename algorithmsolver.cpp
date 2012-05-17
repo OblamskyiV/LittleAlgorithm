@@ -225,14 +225,6 @@ double** AlgorithmSolver::checkMatrixRank(double** matrix, int size, int** x, in
 {
     int matrixSize = 0;
 
-    for (int i = 0; i < size; i++) {
-        printf("\n");
-        for (int j = 0; j < size; j++)
-            printf("%6.2f   ", matrix[i][j]);
-
-    }
-    printf("\n");
-
     double** twoOnTwoMatrix = new double*[2];
     for (unsigned int i = 0; i < 2; i++)
     {
@@ -300,13 +292,6 @@ Node* AlgorithmSolver::divaricate(Node* node)
                                                                   (rows[i][j], cols[i][j]), 0));
 
 
-            for (int i = 0; i < 2; i++) {
-                printf("\n");
-                for (int j = 0; j < 2; j++)
-                    printf("%6.2f   ", m[i][j]);
-
-            }
-            printf("\n");
 
         std::cout << "mark is " << node->mark << "\n";
         for (int i = 0; i < node->path.size(); i++)
@@ -355,7 +340,7 @@ Node* AlgorithmSolver::divaricate(Node* node)
     node->right->costMatrix[chains.at(0).first.first][chains.at(0).first.second]
             = std::numeric_limits<double>::infinity();
 
-  //  node->right->mark += chains.at(0).second;
+    node->right->mark += chains.at(0).second;
 
     std::cout << node->right->mark << " | " << chains.at(0).first.first << " ; " << chains.at(0).first.second << "\n";
 
