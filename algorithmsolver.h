@@ -7,6 +7,13 @@
 #include <stdio.h>
 #include "limits"
 
+struct Node {
+    QVector<QPair<QPair<int, int>, int> > path;
+    double** costMatrix;
+    double mark;
+    Node *left, *right, *parent;
+};
+
 class AlgorithmSolver
 {
 public:
@@ -22,22 +29,28 @@ private:
     double bottomBoundary;
 
 
-    double findMinimalRowElement(int row);
-    double findMinimalColElement(int col);
-    void substractMinFromAllRows();
-    void substractMinFromAllCols();
+    //double findMinimalRowElement(int row);
+    //double findMinimalColElement(int col);
+    double substractMinFromAllRows(double **matrix, int matrixSize, double currentMark);
+    double substractMinFromAllCols(double **matrix, int matrixSize, double currentMark);
 
     double findMaxMatrixElement(double** matrix, int size);
     double findMinimalRowElement(double** matrix, int size, int row, QPair<int, int>);
     double findMinimalColElement(double** matrix, int size, int col, QPair<int, int>);
-    QVector<QPair<int, int> > findChainWithMaxCoef();
+    QVector<QPair<QPair<int, int>, int> > findChainWithMaxCoeff(double** matrix, int size);
 
-    void removeRowAndCol(int row, int col);
+    void removeRowAndCol(double **matrix, int size, int row, int col);
 
-    int findRank();
+    int findRank(double **matrix, int size);
+
+    double** copyMatrix(double** matrix, int size);
+
+    double** checkMatrixRank(double** matrix, int size, int **x, int **y);
 public:
 
     void solve();
+
+    Node* divaricate(Node* node);
 };
 
 #endif // ALGORITHMSOLVER_H
