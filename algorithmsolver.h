@@ -19,6 +19,8 @@ private:
     double **costMatrix;
     int size;
     QVector<QPair<int, int> > contour;
+    double bottomBoundary;
+
 
     double findMinimalRowElement(int row);
     double findMinimalColElement(int col);
