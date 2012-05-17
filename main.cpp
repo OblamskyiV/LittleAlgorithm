@@ -35,7 +35,6 @@ int main(int argc, char *argv[])
 
     AlgorithmSolver *solver = new AlgorithmSolver(costMatrix, size);
     solver->print();
-    std::cout << solver->findMinimalRowElement(1);
 
     return 0;
 }

@@ -18,6 +18,7 @@ private:
     int size;
 
     double findMinimalRowElement(int row);
+    double findMinimalColElement(int col);
 public:
 
 

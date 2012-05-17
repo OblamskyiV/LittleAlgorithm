@@ -25,3 +25,13 @@ double AlgorithmSolver::findMinimalRowElement(int row)
     }
     return min;
 }
+
+double AlgorithmSolver::findMinimalColElement(int col)
+{
+    double min = std::numeric_limits<double>::infinity();
+    for (int i = 0; i < size; i++) {
+        if (costMatrix[i][col] < min)
+            min = costMatrix[i][col];
+    }
+    return min;
+}
